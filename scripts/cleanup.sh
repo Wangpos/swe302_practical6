@@ -34,7 +34,7 @@ fi
 # Step 2: Stop and remove LocalStack container
 echo -e "${YELLOW}Stopping LocalStack...${NC}"
 cd "$PROJECT_ROOT"
-docker-compose down
+docker compose down
 echo -e "${GREEN}LocalStack stopped${NC}"
 echo ""
 

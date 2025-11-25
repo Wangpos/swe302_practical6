@@ -72,6 +72,36 @@ resource "aws_s3_bucket" "logs" {
   }
 }
 
+# Block public access for logs bucket
+resource "aws_s3_bucket_public_access_block" "logs" {
+  bucket = aws_s3_bucket.logs.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+# Enable encryption for logs bucket
+resource "aws_s3_bucket_server_side_encryption_configuration" "logs" {
+  bucket = aws_s3_bucket.logs.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+# Enable versioning for logs bucket
+resource "aws_s3_bucket_versioning" "logs" {
+  bucket = aws_s3_bucket.logs.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 # Enable access logging for deployment bucket
 resource "aws_s3_bucket_logging" "deployment" {
   bucket = aws_s3_bucket.deployment.id
@@ -100,6 +130,16 @@ resource "aws_s3_bucket" "backups" {
   }
 }
 
+# Block public access for backups bucket
+resource "aws_s3_bucket_public_access_block" "backups" {
+  bucket = aws_s3_bucket.backups.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
 # Enable encryption for backups bucket
 resource "aws_s3_bucket_server_side_encryption_configuration" "backups" {
   bucket = aws_s3_bucket.backups.id
@@ -108,6 +148,15 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "backups" {
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
+  }
+}
+
+# Enable versioning for backups bucket
+resource "aws_s3_bucket_versioning" "backups" {
+  bucket = aws_s3_bucket.backups.id
+
+  versioning_configuration {
+    status = "Enabled"
   }
 }
 

@@ -34,6 +34,7 @@ init: ## Initialize all dependencies
 	@echo "Installing Next.js dependencies..."
 	@cd nextjs-app && npm ci
 	@echo "Initializing Terraform..."
+	@rm -f terraform/localstack_providers_override.tf
 	@cd terraform && tflocal init
 	@echo "Dependencies installed!"
 

@@ -34,10 +34,12 @@ echo ""
 echo -e "${YELLOW}[2/5] Deploying infrastructure with Terraform...${NC}"
 cd "$TERRAFORM_DIR"
 
-if [ ! -d ".terraform" ]; then
-    echo "Initializing Terraform..."
-    tflocal init
-fi
+# Remove override file if it exists
+rm -f localstack_providers_override.tf
+
+# Always initialize to ensure dependencies are up to date
+echo "Initializing Terraform..."
+tflocal init
 
 echo "Planning Terraform changes..."
 tflocal plan -out=tfplan

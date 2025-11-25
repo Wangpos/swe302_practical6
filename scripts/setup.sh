@@ -12,12 +12,12 @@ fi
 # Check if LocalStack is already running
 if docker ps | grep -q practical6_localstack; then
     echo "⚠️  LocalStack is already running. Stopping it first..."
-    docker-compose down
+    docker compose down
 fi
 
 # Start LocalStack
 echo "Starting LocalStack..."
-docker-compose up -d
+docker compose up -d
 
 # Wait for LocalStack to be ready
 echo "Waiting for LocalStack to initialize (this may take 30-60 seconds)..."
@@ -40,7 +40,7 @@ done
 
 if [ $attempt -eq $max_attempts ]; then
     echo "❌ LocalStack failed to start properly."
-    echo "Check logs with: docker-compose logs localstack"
+    echo "Check logs with: docker compose logs localstack"
     exit 1
 fi
 
@@ -50,6 +50,6 @@ echo "✅ LocalStack is running!"
 echo "   Gateway URL: http://localhost:4566"
 echo "   Dashboard: https://app.localstack.cloud (if using LocalStack Pro)"
 echo ""
-echo "To view logs: docker-compose logs -f localstack"
-echo "To stop: docker-compose down"
+echo "To view logs: docker compose logs -f localstack"
+echo "To stop: docker compose down"
 echo ""
